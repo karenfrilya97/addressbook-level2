@@ -36,6 +36,7 @@ public class UniquePersonList implements Iterable<Person> {
     public static class PersonNotFoundException extends Exception {}
 
     private final List<Person> internalList = new ArrayList<>();
+    private PersonComparatorByName personComparatorByName = new PersonComparatorByName();
 
     /**
      * Constructs empty person list.
@@ -139,5 +140,9 @@ public class UniquePersonList implements Iterable<Person> {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
                         && this.internalList.equals(((UniquePersonList) other).internalList));
+    }
+
+    public void sort() {
+        Collections.sort(internalList, personComparatorByName);
     }
 }
