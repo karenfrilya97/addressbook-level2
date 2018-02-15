@@ -11,17 +11,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.addressbook.commands.AddCommand;
-import seedu.addressbook.commands.ClearCommand;
-import seedu.addressbook.commands.Command;
-import seedu.addressbook.commands.DeleteCommand;
-import seedu.addressbook.commands.ExitCommand;
-import seedu.addressbook.commands.FindCommand;
-import seedu.addressbook.commands.HelpCommand;
-import seedu.addressbook.commands.IncorrectCommand;
-import seedu.addressbook.commands.ListCommand;
-import seedu.addressbook.commands.ViewAllCommand;
-import seedu.addressbook.commands.ViewCommand;
+import seedu.addressbook.commands.*;
+import seedu.addressbook.data.exception.IllegalContactFieldException;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -41,6 +32,10 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    public static final Pattern INDEX_FIELD_DETAIL_FORMAT =
+            Pattern.compile("(?<targetIndex>[^/]+)"
+                    + "(?<contactField>[^/]+)"
+                    + "(?<newDetails>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -99,7 +94,10 @@ public class Parser {
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD: // Fallthrough
+        case EditCommand.COMMAND_WORD:
+            return prepareEdit(arguments);
+
+            case HelpCommand.COMMAND_WORD: // Fallthrough
         default:
             return new HelpCommand();
         }
@@ -250,5 +248,22 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
-
+    private Command prepareEdit(String args) {
+        final Matcher matcher = INDEX_FIELD_DETAIL_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditCommand(Integer.parseInt(
+                    matcher.group("targetIndex")),
+                    matcher.group("contactField"),
+                    matcher.group("newDetail")
+            );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        } catch (IllegalContactFieldException e) {
+            return new IncorrectCommand(e.getMessage());
+        }
+    }
 }
