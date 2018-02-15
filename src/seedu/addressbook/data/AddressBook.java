@@ -1,6 +1,9 @@
 package seedu.addressbook.data;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.PersonComparatorByName;
@@ -127,5 +130,8 @@ public class AddressBook {
                         && this.allTags.equals(((AddressBook) other).allTags));
     }
 
+    /**
+     * Sorts the address book based on persons' names in alphabetical order (based on ASCII value).
+     */
     public void sort() { allPersons.sort(); }
 }
