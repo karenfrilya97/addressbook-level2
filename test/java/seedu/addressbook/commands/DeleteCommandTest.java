@@ -16,7 +16,6 @@ import seedu.addressbook.data.person.Name;
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.Phone;
 import seedu.addressbook.data.person.ReadOnlyPerson;
-import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.ui.TextUi;
 import seedu.addressbook.util.TestUtil;
@@ -79,7 +78,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_validIndex_personIsDeleted() throws PersonNotFoundException {
+    public void execute_validIndex_personIsDeleted() {
         assertDeletionSuccessful(1, addressBook, listWithSurnameDoe);
         assertDeletionSuccessful(listWithSurnameDoe.size(), addressBook, listWithSurnameDoe);
 
@@ -142,11 +141,9 @@ public class DeleteCommandTest {
      * Asserts that the person at the specified index can be successfully deleted.
      *
      * The addressBook passed in will not be modified (no side effects).
-     *
-     * @throws PersonNotFoundException if the selected person is not in the address book
      */
     private void assertDeletionSuccessful(int targetVisibleIndex, AddressBook addressBook,
-                                          List<ReadOnlyPerson> displayList) throws PersonNotFoundException {
+                                          List<ReadOnlyPerson> displayList) {
 
         ReadOnlyPerson targetPerson = displayList.get(targetVisibleIndex - TextUi.DISPLAYED_INDEX_OFFSET);
 

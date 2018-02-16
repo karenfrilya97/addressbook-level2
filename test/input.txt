@@ -41,26 +41,27 @@
 
   # should add correctly and list non private information
   add Betsy Choo pp/222222 pe/benchoo@nus.edu.sg pa/222, beta street t/secretive
-  list
   add Esther Potato p/555555 e/esther@not.a.real.potato pa/555, epsilon street t/tubers t/starchy
-  list
   add Charlie Dickson pp/333333 e/charlie.d@nus.edu.sg a/333, gamma street t/friends t/school
-  list
   add Adam Brown p/111111 e/adam@gmail.com a/111, alpha street
-  list
   add Dickson Ee p/444444 pe/dickson@nus.edu.sg a/444, delta street t/friends
-  list
 
   # should not allow adding duplicate persons
   add Esther Potato p/555555 e/esther@not.a.real.potato pa/555, epsilon street t/tubers t/starchy
 
 ##########################################################
+# test list address book command
+##########################################################
+
+  # should list all persons in the address book
+  list
+
+##########################################################
 # test sort address book command
 ##########################################################
 
-  # should sort address book based on persons' names in alphabetical order
+  # should sort address book based on persons' names in alphabetical order and display the sorted address book
   sort
-  list
 
 ##########################################################
 # test view/viewall persons command
@@ -129,24 +130,12 @@
   delete 0
   delete 3
 
-  # should catch attempt to delete something already deleted
+  # should delete based on last active view's index
   delete 2
-  delete 2
 
-  # should catch attempt to view something already deleted
-  view 2
-  viewall 2
-
-  # should have deleted based on last active view's index
-  list
-
-  # deletes correct person
-  delete 4
-  list
-
-  # listing indexes get updated on next request
-  delete 1
-  list
+  # should delete based on list shown after a person is deleted
+  delete 3
+  delete 3
 
 ##########################################################
 # test clear command

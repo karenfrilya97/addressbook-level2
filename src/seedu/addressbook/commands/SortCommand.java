@@ -1,8 +1,12 @@
 package seedu.addressbook.commands;
 
+import java.util.List;
+import seedu.addressbook.data.person.ReadOnlyPerson;
+
 
 /**
  * Sorts the address book based on persons' names in alphabetical order (based on ASCII value).
+ * Lists all persons in the address book after sorting.
  */
 public class SortCommand extends Command {
 
@@ -17,6 +21,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() {
         addressBook.sort();
-        return new CommandResult(MESSAGE_SUCCESS);
+        List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
+        return new CommandResult(MESSAGE_SUCCESS, allPersons);
     }
 }

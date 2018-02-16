@@ -11,7 +11,6 @@ import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
 
 
-
 /**
  * A list of persons. Does not allow null elements or duplicates.
  *
@@ -28,12 +27,6 @@ public class UniquePersonList implements Iterable<Person> {
             super("Operation would result in duplicate persons");
         }
     }
-
-    /**
-     * Signals that an operation targeting a specified person in the list would fail because
-     * there is no such matching person in the list.
-     */
-    public static class PersonNotFoundException extends Exception {}
 
     private final List<Person> internalList = new ArrayList<>();
     private PersonComparatorByName personComparatorByName = new PersonComparatorByName();
@@ -113,14 +106,9 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Removes the equivalent person from the list.
-     *
-     * @throws PersonNotFoundException if no such person could be found in the list.
      */
-    public void remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
+    public void remove(ReadOnlyPerson toRemove) {
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
-        if (!personFoundAndDeleted) {
-            throw new PersonNotFoundException();
-        }
     }
 
     /**
