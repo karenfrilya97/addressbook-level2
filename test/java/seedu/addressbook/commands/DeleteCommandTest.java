@@ -80,7 +80,6 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndex_personIsDeleted() throws PersonNotFoundException {
-    public void execute_validIndex_personIsDeleted() {
         assertDeletionSuccessful(1, addressBook, listWithSurnameDoe);
         assertDeletionSuccessful(listWithSurnameDoe.size(), addressBook, listWithSurnameDoe);
 
@@ -148,7 +147,6 @@ public class DeleteCommandTest {
      */
     private void assertDeletionSuccessful(int targetVisibleIndex, AddressBook addressBook,
                                           List<ReadOnlyPerson> displayList) throws PersonNotFoundException {
-                                          List<ReadOnlyPerson> displayList) {
 
         ReadOnlyPerson targetPerson = displayList.get(targetVisibleIndex - TextUi.DISPLAYED_INDEX_OFFSET);
 
