@@ -28,6 +28,12 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    /**
+     * Signals that an operation targeting a specified person in the list would fail because
+     * there is no such matching person in the list.
+     */
+    public static class PersonNotFoundException extends Exception {}
+
     private final List<Person> internalList = new ArrayList<>();
     private PersonComparatorByName personComparatorByName = new PersonComparatorByName();
 
@@ -106,9 +112,14 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Removes the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
      */
-    public void remove(ReadOnlyPerson toRemove) {
+    public void remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
+        if (!personFoundAndDeleted) {
+            throw new PersonNotFoundException();
+        }
     }
 
     /**

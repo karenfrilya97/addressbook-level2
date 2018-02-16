@@ -10,6 +10,7 @@ import seedu.addressbook.data.person.PersonComparatorByName;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
+import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
@@ -92,8 +93,10 @@ public class AddressBook {
 
     /**
      * Removes the equivalent person from the address book.
+     *
+     * @throws PersonNotFoundException if no such Person could be found.
      */
-    public void removePerson(ReadOnlyPerson toRemove) {
+    public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
     }
 
